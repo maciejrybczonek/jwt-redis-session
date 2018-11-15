@@ -54,7 +54,7 @@ describe("JWT Redis Session Tests", function(){
 		});
 
 		it("Should allow the user to create a new JWT session", function(done){
-			
+
 			var handler = function handler(req, res){
 				req.session.create(function(error, token){
 					assert.isString(token, "Token is a string");
@@ -96,27 +96,27 @@ describe("JWT Redis Session Tests", function(){
 			async.series([
 				function(callback){
 					request(
-						{ method: "get", path: "/ping" }, 
-						{ accessToken: token }, 
-						_.partialRight(testResponse, callback)
-					);
-				},
-				function(callback){
-					request(
-						{ method: "post", path: "/ping" }, 
+						{ method: "get", path: "/ping" },
 						{ accessToken: token },
 						_.partialRight(testResponse, callback)
 					);
 				},
 				function(callback){
 					request(
-						{ 
-							method: "get", 
+						{ method: "post", path: "/ping" },
+						{ accessToken: token },
+						_.partialRight(testResponse, callback)
+					);
+				},
+				function(callback){
+					request(
+						{
+							method: "get",
 							path: "/ping",
 							headers: {
 								"x-access-token": token
 							}
-						}, 
+						},
 						null,
 						_.partialRight(testResponse, callback)
 					);
@@ -287,7 +287,7 @@ describe("JWT Redis Session Tests", function(){
 		});
 
 		it("Should allow for a custom requestKey", function(done){
-			
+
 			var handler = function handler(req, res){
 				assert.property(req, customRequestKey, "Request has custom requestKey property");
 				assert.isObject(req[customRequestKey], "Request has custom requestKey object");
@@ -392,7 +392,7 @@ describe("JWT Redis Session Tests", function(){
 				res.json({});
 			};
 
-			async.series([ 
+			async.series([
 				function(callback){
 					restartServer({
 						secret: "abc123",
@@ -400,7 +400,7 @@ describe("JWT Redis Session Tests", function(){
 					}, callback);
 				},
 				function(callback){
-					server.addRoute("/login", "get", handler1);	
+					server.addRoute("/login", "get", handler1);
 					server.addRoute("/ping", "all", handler2);
 					callback();
 				},
@@ -422,11 +422,11 @@ describe("JWT Redis Session Tests", function(){
 					request({ method: "post", path: "/ping" }, testData, _.partialRight(testResponse, callback));
 				},
 				function(callback){
-					request({ 
-							method: "get", 
+					request({
+							method: "get",
 							path: "/ping",
 							headers: { "x-fancy-access-token": token }
-						}, 
+						},
 						null,
 						_.partialRight(testResponse, callback)
 					);
@@ -478,7 +478,7 @@ describe("JWT Redis Session Tests", function(){
 				res.json({});
 			};
 
-			async.series([ 
+			async.series([
 				function(callback){
 					restartServer({
 						secret: "abc123",
@@ -487,7 +487,7 @@ describe("JWT Redis Session Tests", function(){
 					}, callback);
 				},
 				function(callback){
-					server.addRoute("/login", "get", handler1);	
+					server.addRoute("/login", "get", handler1);
 					server.addRoute("/ping", "all", handler2);
 					callback();
 				},
@@ -509,11 +509,11 @@ describe("JWT Redis Session Tests", function(){
 					request({ method: "post", path: "/ping" }, testData, _.partialRight(testResponse, callback));
 				},
 				function(callback){
-					request({ 
-							method: "get", 
+					request({
+							method: "get",
 							path: "/ping",
 							headers: { "x-fancy-access-token": token }
-						}, 
+						},
 						null,
 						_.partialRight(testResponse, callback)
 					);
@@ -565,7 +565,7 @@ describe("JWT Redis Session Tests", function(){
 				res.json({});
 			};
 
-			async.series([ 
+			async.series([
 				function(callback){
 					restartServer({
 						secret: "abc123",
@@ -574,7 +574,7 @@ describe("JWT Redis Session Tests", function(){
 					}, callback);
 				},
 				function(callback){
-					server.addRoute("/login", "get", handler1);	
+					server.addRoute("/login", "get", handler1);
 					server.addRoute("/ping", "all", handler2);
 					callback();
 				},
@@ -596,11 +596,11 @@ describe("JWT Redis Session Tests", function(){
 					request({ method: "post", path: "/ping" }, testData, _.partialRight(testResponse, callback));
 				},
 				function(callback){
-					request({ 
-							method: "get", 
+					request({
+							method: "get",
 							path: "/ping",
 							headers: _.set({}, customArg, token)
-						}, 
+						},
 						null,
 						_.partialRight(testResponse, callback)
 					);
